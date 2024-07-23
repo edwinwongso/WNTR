@@ -2560,6 +2560,7 @@ class BinFile(object):
             the values to save
 			
         """
+        self.results.energy = values
         pass
 
     def finalize_save(self, good_read, sim_warnings):

@@ -20,4 +20,5 @@ class SimulationResults(object):
         self.timestamp = str(datetime.datetime.now())
         self.network_name = None
         self.link = None
+        self.energy = None
         self.node = None

@@ -381,7 +381,11 @@ def pump_cost(energy, wn):
             if wn.options.energy.global_pattern is None:
                 price_dict[pump_name] = [wn.options.energy.global_price for i in time]
             else:
-                raise NotImplementedError('WNTR does not support price patterns yet.')
+                price_multiplier = wn.get_pattern(wn.options.energy.global_pattern).multipliers.tolist()
+                total_len = len(price_multiplier)
+                # raise NotImplementedError('WNTR does not support price patterns yet.')
+                price_dict[pump_name] = [wn.options.energy.global_price * price_multiplier[i//60] if i // 60 < total_len else wn.options.energy.global_price * price_multiplier[total_len - 1] 
+                                         for i in time]
         elif pump.energy_pattern is None:
             if wn.options.energy.global_pattern is None:
                 price_dict[pump_name] = [pump.energy_price for i in time]
@@ -394,5 +398,5 @@ def pump_cost(energy, wn):
     
     pump_cost = energy * price
     
-    return pump_cost
+    return pump_cost, energy
     
